@@ -2,6 +2,8 @@
 extern "C" {
 #endif
 
+#include <libavcodec/avcodec.h>
+
 #ifdef __cplusplus
 }
 #endif

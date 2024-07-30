@@ -1,4 +1,4 @@
-project(prog)
+project(prog LANGUAGES C)
 
 file(GLOB _src *.h *.hpp *.c)
 add_executable(${PROJECT_NAME} ${_src})

@@ -264,7 +264,7 @@ void avcodec_free_context(AVCodecContext **avctx) {
     qge_CallNativeProc(DynamicApis::pavcodec_free_context, a.data(), &ret);
 }
 
-const int *avcodec_get_class() {
+const int *avcodec_get_class(void) {
     auto ret = create_empty_ret(avcodec_get_class);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavcodec_get_class, a.data(), &ret);

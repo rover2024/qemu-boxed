@@ -172,7 +172,7 @@ AVCodecParameters *avcodec_parameters_alloc() {
 
 void avcodec_parameters_free(AVCodecParameters **par) {
     auto a = get_addresses_of_parameters(par);
-    qge_CallNativeProc(DynamicApis::pavcodec_parameters_free, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavcodec_parameters_free, a.data(), nullptr);
 }
 
 int avcodec_parameters_copy(AVCodecParameters *dst, const AVCodecParameters *src) {
@@ -191,7 +191,7 @@ AVPacket *av_packet_alloc() {
 
 void av_packet_free(AVPacket **pkt) {
     auto a = get_addresses_of_parameters(pkt);
-    qge_CallNativeProc(DynamicApis::pav_packet_free, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pav_packet_free, a.data(), nullptr);
 }
 
 uint8_t *av_packet_new_side_data(AVPacket *pkt, enum AVPacketSideDataType type, size_t size) {
@@ -218,12 +218,12 @@ int av_packet_ref(AVPacket *dst, const AVPacket *src) {
 
 void av_packet_unref(AVPacket *pkt) {
     auto a = get_addresses_of_parameters(pkt);
-    qge_CallNativeProc(DynamicApis::pav_packet_unref, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pav_packet_unref, a.data(), nullptr);
 }
 
 void av_packet_move_ref(AVPacket *dst, AVPacket *src) {
     auto a = get_addresses_of_parameters(dst, src);
-    qge_CallNativeProc(DynamicApis::pav_packet_move_ref, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pav_packet_move_ref, a.data(), nullptr);
 }
 
 int av_packet_make_refcounted(AVPacket *pkt) {
@@ -235,7 +235,7 @@ int av_packet_make_refcounted(AVPacket *pkt) {
 
 void av_packet_rescale_ts(AVPacket *pkt, int tb_src, int tb_dst) {
     auto a = get_addresses_of_parameters(pkt, tb_src, tb_dst);
-    qge_CallNativeProc(DynamicApis::pav_packet_rescale_ts, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pav_packet_rescale_ts, a.data(), nullptr);
 }
 
 unsigned int avcodec_version() {
@@ -261,10 +261,10 @@ AVCodecContext *avcodec_alloc_context3(const AVCodec *codec) {
 
 void avcodec_free_context(AVCodecContext **avctx) {
     auto a = get_addresses_of_parameters(avctx);
-    qge_CallNativeProc(DynamicApis::pavcodec_free_context, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavcodec_free_context, a.data(), nullptr);
 }
 
-const int *avcodec_get_class(void) {
+const int *avcodec_get_class() {
     auto ret = create_empty_ret(avcodec_get_class);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavcodec_get_class, a.data(), &ret);
@@ -301,7 +301,7 @@ int avcodec_close(AVCodecContext *avctx) {
 
 void avsubtitle_free(AVSubtitle *sub) {
     auto a = get_addresses_of_parameters(sub);
-    qge_CallNativeProc(DynamicApis::pavsubtitle_free, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavsubtitle_free, a.data(), nullptr);
 }
 
 int avcodec_decode_subtitle2(AVCodecContext *avctx, AVSubtitle *sub, int *got_sub_ptr,
@@ -350,7 +350,7 @@ int avcodec_encode_subtitle(AVCodecContext *avctx, uint8_t *buf, int buf_size,
 
 void avcodec_flush_buffers(AVCodecContext *avctx) {
     auto a = get_addresses_of_parameters(avctx);
-    qge_CallNativeProc(DynamicApis::pavcodec_flush_buffers, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavcodec_flush_buffers, a.data(), nullptr);
 }
 
 int av_get_audio_frame_duration(AVCodecContext *avctx, int frame_bytes) {
@@ -397,7 +397,7 @@ int av_bsf_receive_packet(AVBSFContext *ctx, AVPacket *pkt) {
 
 void av_bsf_free(AVBSFContext **ctx) {
     auto a = get_addresses_of_parameters(ctx);
-    qge_CallNativeProc(DynamicApis::pav_bsf_free, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pav_bsf_free, a.data(), nullptr);
 }
 
 const int *av_bsf_get_class() {

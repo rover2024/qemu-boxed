@@ -163,7 +163,7 @@ const AVCodecDescriptor *avcodec_descriptor_get_by_name(const char *name) {
     return ret;
 }
 
-AVCodecParameters *avcodec_parameters_alloc() {
+AVCodecParameters *avcodec_parameters_alloc(void) {
     auto ret = create_empty_ret(avcodec_parameters_alloc);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavcodec_parameters_alloc, a.data(), &ret);
@@ -182,7 +182,7 @@ int avcodec_parameters_copy(AVCodecParameters *dst, const AVCodecParameters *src
     return ret;
 }
 
-AVPacket *av_packet_alloc() {
+AVPacket *av_packet_alloc(void) {
     auto ret = create_empty_ret(av_packet_alloc);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pav_packet_alloc, a.data(), &ret);
@@ -238,14 +238,14 @@ void av_packet_rescale_ts(AVPacket *pkt, int tb_src, int tb_dst) {
     qge_CallNativeProc(DynamicApis::pav_packet_rescale_ts, a.data(), nullptr);
 }
 
-unsigned int avcodec_version() {
+unsigned int avcodec_version(void) {
     auto ret = create_empty_ret(avcodec_version);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavcodec_version, a.data(), &ret);
     return ret;
 }
 
-const char *avcodec_configuration() {
+const char *avcodec_configuration(void) {
     auto ret = create_empty_ret(avcodec_configuration);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavcodec_configuration, a.data(), &ret);
@@ -264,7 +264,7 @@ void avcodec_free_context(AVCodecContext **avctx) {
     qge_CallNativeProc(DynamicApis::pavcodec_free_context, a.data(), nullptr);
 }
 
-const int *avcodec_get_class() {
+const int *avcodec_get_class(void) {
     auto ret = create_empty_ret(avcodec_get_class);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavcodec_get_class, a.data(), &ret);
@@ -400,7 +400,7 @@ void av_bsf_free(AVBSFContext **ctx) {
     qge_CallNativeProc(DynamicApis::pav_bsf_free, a.data(), nullptr);
 }
 
-const int *av_bsf_get_class() {
+const int *av_bsf_get_class(void) {
     auto ret = create_empty_ret(av_bsf_get_class);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pav_bsf_get_class, a.data(), &ret);

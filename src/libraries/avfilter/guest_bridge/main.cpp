@@ -72,14 +72,14 @@ namespace {
 
 }
 
-unsigned int avfilter_version() {
+unsigned int avfilter_version(void) {
     auto ret = create_empty_ret(avfilter_version);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavfilter_version, a.data(), &ret);
     return ret;
 }
 
-const char *avfilter_configuration() {
+const char *avfilter_configuration(void) {
     auto ret = create_empty_ret(avfilter_configuration);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavfilter_configuration, a.data(), &ret);
@@ -136,14 +136,14 @@ int avfilter_init_str(AVFilterContext *ctx, const char *args) {
     return ret;
 }
 
-const int *avfilter_get_class() {
+const AVClass *avfilter_get_class(void) {
     auto ret = create_empty_ret(avfilter_get_class);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavfilter_get_class, a.data(), &ret);
     return ret;
 }
 
-AVFilterGraph *avfilter_graph_alloc() {
+AVFilterGraph *avfilter_graph_alloc(void) {
     auto ret = create_empty_ret(avfilter_graph_alloc);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavfilter_graph_alloc, a.data(), &ret);
@@ -168,7 +168,7 @@ int avfilter_graph_create_filter(AVFilterContext **filt_ctx, const AVFilter *fil
 
 void avfilter_graph_set_auto_convert(AVFilterGraph *graph, unsigned int flags) {
     auto a = get_addresses_of_parameters(graph, flags);
-    qge_CallNativeProc(DynamicApis::pavfilter_graph_set_auto_convert, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavfilter_graph_set_auto_convert, a.data(), nullptr);
 }
 
 int avfilter_graph_config(AVFilterGraph *graphctx, void *log_ctx) {
@@ -180,12 +180,12 @@ int avfilter_graph_config(AVFilterGraph *graphctx, void *log_ctx) {
 
 void avfilter_graph_free(AVFilterGraph **graph) {
     auto a = get_addresses_of_parameters(graph);
-    qge_CallNativeProc(DynamicApis::pavfilter_graph_free, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavfilter_graph_free, a.data(), nullptr);
 }
 
 void avfilter_inout_free(AVFilterInOut **inout) {
     auto a = get_addresses_of_parameters(inout);
-    qge_CallNativeProc(DynamicApis::pavfilter_inout_free, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavfilter_inout_free, a.data(), nullptr);
 }
 
 int avfilter_graph_parse2(AVFilterGraph *graph, const char *filters, AVFilterInOut **inputs,
@@ -219,7 +219,7 @@ int avfilter_graph_request_oldest(AVFilterGraph *graph) {
     return ret;
 }
 
-int av_buffersink_get_frame_flags(AVFilterContext *ctx, int *frame, int flags) {
+int av_buffersink_get_frame_flags(AVFilterContext *ctx, AVFrame *frame, int flags) {
     auto ret = create_empty_ret(av_buffersink_get_frame_flags);
     auto a = get_addresses_of_parameters(ctx, frame, flags);
     qge_CallNativeProc(DynamicApis::pav_buffersink_get_frame_flags, a.data(), &ret);
@@ -228,7 +228,7 @@ int av_buffersink_get_frame_flags(AVFilterContext *ctx, int *frame, int flags) {
 
 void av_buffersink_set_frame_size(AVFilterContext *ctx, unsigned int frame_size) {
     auto a = get_addresses_of_parameters(ctx, frame_size);
-    qge_CallNativeProc(DynamicApis::pav_buffersink_set_frame_size, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pav_buffersink_set_frame_size, a.data(), nullptr);
 }
 
 enum AVMediaType av_buffersink_get_type(const AVFilterContext *ctx) {
@@ -238,7 +238,7 @@ enum AVMediaType av_buffersink_get_type(const AVFilterContext *ctx) {
     return ret;
 }
 
-int av_buffersink_get_time_base(const AVFilterContext *ctx) {
+AVRational av_buffersink_get_time_base(const AVFilterContext *ctx) {
     auto ret = create_empty_ret(av_buffersink_get_time_base);
     auto a = get_addresses_of_parameters(ctx);
     qge_CallNativeProc(DynamicApis::pav_buffersink_get_time_base, a.data(), &ret);
@@ -252,7 +252,7 @@ int av_buffersink_get_format(const AVFilterContext *ctx) {
     return ret;
 }
 
-int av_buffersink_get_frame_rate(const AVFilterContext *ctx) {
+AVRational av_buffersink_get_frame_rate(const AVFilterContext *ctx) {
     auto ret = create_empty_ret(av_buffersink_get_frame_rate);
     auto a = get_addresses_of_parameters(ctx);
     qge_CallNativeProc(DynamicApis::pav_buffersink_get_frame_rate, a.data(), &ret);
@@ -273,14 +273,14 @@ int av_buffersink_get_h(const AVFilterContext *ctx) {
     return ret;
 }
 
-int av_buffersink_get_sample_aspect_ratio(const AVFilterContext *ctx) {
+AVRational av_buffersink_get_sample_aspect_ratio(const AVFilterContext *ctx) {
     auto ret = create_empty_ret(av_buffersink_get_sample_aspect_ratio);
     auto a = get_addresses_of_parameters(ctx);
     qge_CallNativeProc(DynamicApis::pav_buffersink_get_sample_aspect_ratio, a.data(), &ret);
     return ret;
 }
 
-int av_buffersink_get_ch_layout(const AVFilterContext *ctx, int *ch_layout) {
+int av_buffersink_get_ch_layout(const AVFilterContext *ctx, AVChannelLayout *ch_layout) {
     auto ret = create_empty_ret(av_buffersink_get_ch_layout);
     auto a = get_addresses_of_parameters(ctx, ch_layout);
     qge_CallNativeProc(DynamicApis::pav_buffersink_get_ch_layout, a.data(), &ret);
@@ -294,7 +294,7 @@ int av_buffersink_get_sample_rate(const AVFilterContext *ctx) {
     return ret;
 }
 
-int *av_buffersink_get_hw_frames_ctx(const AVFilterContext *ctx) {
+AVBufferRef *av_buffersink_get_hw_frames_ctx(const AVFilterContext *ctx) {
     auto ret = create_empty_ret(av_buffersink_get_hw_frames_ctx);
     auto a = get_addresses_of_parameters(ctx);
     qge_CallNativeProc(DynamicApis::pav_buffersink_get_hw_frames_ctx, a.data(), &ret);
@@ -308,7 +308,7 @@ unsigned int av_buffersrc_get_nb_failed_requests(AVFilterContext *buffer_src) {
     return ret;
 }
 
-AVBufferSrcParameters *av_buffersrc_parameters_alloc() {
+AVBufferSrcParameters *av_buffersrc_parameters_alloc(void) {
     auto ret = create_empty_ret(av_buffersrc_parameters_alloc);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pav_buffersrc_parameters_alloc, a.data(), &ret);
@@ -322,21 +322,21 @@ int av_buffersrc_parameters_set(AVFilterContext *ctx, AVBufferSrcParameters *par
     return ret;
 }
 
-int av_buffersrc_add_frame(AVFilterContext *ctx, int *frame) {
+int av_buffersrc_add_frame(AVFilterContext *ctx, AVFrame *frame) {
     auto ret = create_empty_ret(av_buffersrc_add_frame);
     auto a = get_addresses_of_parameters(ctx, frame);
     qge_CallNativeProc(DynamicApis::pav_buffersrc_add_frame, a.data(), &ret);
     return ret;
 }
 
-int av_buffersrc_add_frame_flags(AVFilterContext *buffer_src, int *frame, int flags) {
+int av_buffersrc_add_frame_flags(AVFilterContext *buffer_src, AVFrame *frame, int flags) {
     auto ret = create_empty_ret(av_buffersrc_add_frame_flags);
     auto a = get_addresses_of_parameters(buffer_src, frame, flags);
     qge_CallNativeProc(DynamicApis::pav_buffersrc_add_frame_flags, a.data(), &ret);
     return ret;
 }
 
-int av_buffersrc_close(AVFilterContext *ctx, int pts, unsigned int flags) {
+int av_buffersrc_close(AVFilterContext *ctx, int64_t pts, unsigned int flags) {
     auto ret = create_empty_ret(av_buffersrc_close);
     auto a = get_addresses_of_parameters(ctx, pts, flags);
     qge_CallNativeProc(DynamicApis::pav_buffersrc_close, a.data(), &ret);

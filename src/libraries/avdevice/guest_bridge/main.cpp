@@ -72,47 +72,47 @@ namespace {
 
 }
 
-unsigned int avdevice_version() {
+unsigned int avdevice_version(void) {
     auto ret = create_empty_ret(avdevice_version);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavdevice_version, a.data(), &ret);
     return ret;
 }
 
-const char *avdevice_configuration() {
+const char *avdevice_configuration(void) {
     auto ret = create_empty_ret(avdevice_configuration);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavdevice_configuration, a.data(), &ret);
     return ret;
 }
 
-void avdevice_register_all() {
+void avdevice_register_all(void) {
     auto a = get_addresses_of_parameters();
-    qge_CallNativeProc(DynamicApis::pavdevice_register_all, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavdevice_register_all, a.data(), nullptr);
 }
 
-const int *av_input_audio_device_next(const int *d) {
+const AVInputFormat *av_input_audio_device_next(const AVInputFormat *d) {
     auto ret = create_empty_ret(av_input_audio_device_next);
     auto a = get_addresses_of_parameters(d);
     qge_CallNativeProc(DynamicApis::pav_input_audio_device_next, a.data(), &ret);
     return ret;
 }
 
-const int *av_input_video_device_next(const int *d) {
+const AVInputFormat *av_input_video_device_next(const AVInputFormat *d) {
     auto ret = create_empty_ret(av_input_video_device_next);
     auto a = get_addresses_of_parameters(d);
     qge_CallNativeProc(DynamicApis::pav_input_video_device_next, a.data(), &ret);
     return ret;
 }
 
-const int *av_output_audio_device_next(const int *d) {
+const AVOutputFormat *av_output_audio_device_next(const AVOutputFormat *d) {
     auto ret = create_empty_ret(av_output_audio_device_next);
     auto a = get_addresses_of_parameters(d);
     qge_CallNativeProc(DynamicApis::pav_output_audio_device_next, a.data(), &ret);
     return ret;
 }
 
-const int *av_output_video_device_next(const int *d) {
+const AVOutputFormat *av_output_video_device_next(const AVOutputFormat *d) {
     auto ret = create_empty_ret(av_output_video_device_next);
     auto a = get_addresses_of_parameters(d);
     qge_CallNativeProc(DynamicApis::pav_output_video_device_next, a.data(), &ret);
@@ -121,19 +121,19 @@ const int *av_output_video_device_next(const int *d) {
 
 void avdevice_free_list_devices(AVDeviceInfoList **device_list) {
     auto a = get_addresses_of_parameters(device_list);
-    qge_CallNativeProc(DynamicApis::pavdevice_free_list_devices, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavdevice_free_list_devices, a.data(), nullptr);
 }
 
-int avdevice_list_input_sources(const int *device, const char *device_name, int *device_options,
-                                AVDeviceInfoList **device_list) {
+int avdevice_list_input_sources(const AVInputFormat *device, const char *device_name,
+                                AVDictionary *device_options, AVDeviceInfoList **device_list) {
     auto ret = create_empty_ret(avdevice_list_input_sources);
     auto a = get_addresses_of_parameters(device, device_name, device_options, device_list);
     qge_CallNativeProc(DynamicApis::pavdevice_list_input_sources, a.data(), &ret);
     return ret;
 }
 
-int avdevice_list_output_sinks(const int *device, const char *device_name, int *device_options,
-                               AVDeviceInfoList **device_list) {
+int avdevice_list_output_sinks(const AVOutputFormat *device, const char *device_name,
+                               AVDictionary *device_options, AVDeviceInfoList **device_list) {
     auto ret = create_empty_ret(avdevice_list_output_sinks);
     auto a = get_addresses_of_parameters(device, device_name, device_options, device_list);
     qge_CallNativeProc(DynamicApis::pavdevice_list_output_sinks, a.data(), &ret);

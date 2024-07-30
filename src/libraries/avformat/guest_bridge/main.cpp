@@ -88,7 +88,7 @@ int avio_check(const char *url, int flags) {
 
 void avio_write(AVIOContext *s, const unsigned char *buf, int size) {
     auto a = get_addresses_of_parameters(s, buf, size);
-    qge_CallNativeProc(DynamicApis::pavio_write, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavio_write, a.data(), nullptr);
 }
 
 int64_t avio_seek(AVIOContext *s, int64_t offset, int whence) {
@@ -107,12 +107,12 @@ int64_t avio_size(AVIOContext *s) {
 
 void avio_print_string_array(AVIOContext *s, const char *[] strings) {
     auto a = get_addresses_of_parameters(s, strings);
-    qge_CallNativeProc(DynamicApis::pavio_print_string_array, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavio_print_string_array, a.data(), nullptr);
 }
 
 void avio_flush(AVIOContext *s) {
     auto a = get_addresses_of_parameters(s);
-    qge_CallNativeProc(DynamicApis::pavio_flush, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavio_flush, a.data(), nullptr);
 }
 
 int avio_read(AVIOContext *s, unsigned char *buf, int size) {
@@ -137,7 +137,7 @@ int avio_open(AVIOContext **s, const char *url, int flags) {
 }
 
 int avio_open2(AVIOContext **s, const char *url, int flags, const AVIOInterruptCB *int_cb,
-               int **options) {
+               AVDictionary **options) {
     auto ret = create_empty_ret(avio_open2);
     auto a = get_addresses_of_parameters(s, url, flags, int_cb, options);
     qge_CallNativeProc(DynamicApis::pavio_open2, a.data(), &ret);
@@ -165,7 +165,7 @@ const char *avio_enum_protocols(void **opaque, int output) {
     return ret;
 }
 
-const int *avio_protocol_get_class(const char *name) {
+const AVClass *avio_protocol_get_class(const char *name) {
     auto ret = create_empty_ret(avio_protocol_get_class);
     auto a = get_addresses_of_parameters(name);
     qge_CallNativeProc(DynamicApis::pavio_protocol_get_class, a.data(), &ret);
@@ -200,28 +200,28 @@ int64_t av_stream_get_end_pts(const AVStream *st) {
     return ret;
 }
 
-unsigned int avformat_version() {
+unsigned int avformat_version(void) {
     auto ret = create_empty_ret(avformat_version);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavformat_version, a.data(), &ret);
     return ret;
 }
 
-const char *avformat_configuration() {
+const char *avformat_configuration(void) {
     auto ret = create_empty_ret(avformat_configuration);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavformat_configuration, a.data(), &ret);
     return ret;
 }
 
-int avformat_network_init() {
+int avformat_network_init(void) {
     auto ret = create_empty_ret(avformat_network_init);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavformat_network_init, a.data(), &ret);
     return ret;
 }
 
-int avformat_network_deinit() {
+int avformat_network_deinit(void) {
     auto ret = create_empty_ret(avformat_network_deinit);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavformat_network_deinit, a.data(), &ret);
@@ -242,7 +242,7 @@ const AVInputFormat *av_demuxer_iterate(void **opaque) {
     return ret;
 }
 
-AVFormatContext *avformat_alloc_context() {
+AVFormatContext *avformat_alloc_context(void) {
     auto ret = create_empty_ret(avformat_alloc_context);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavformat_alloc_context, a.data(), &ret);
@@ -251,24 +251,24 @@ AVFormatContext *avformat_alloc_context() {
 
 void avformat_free_context(AVFormatContext *s) {
     auto a = get_addresses_of_parameters(s);
-    qge_CallNativeProc(DynamicApis::pavformat_free_context, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavformat_free_context, a.data(), nullptr);
 }
 
-const int *avformat_get_class() {
+const AVClass *avformat_get_class(void) {
     auto ret = create_empty_ret(avformat_get_class);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavformat_get_class, a.data(), &ret);
     return ret;
 }
 
-const int *av_stream_get_class() {
+const AVClass *av_stream_get_class(void) {
     auto ret = create_empty_ret(av_stream_get_class);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pav_stream_get_class, a.data(), &ret);
     return ret;
 }
 
-AVStream *avformat_new_stream(AVFormatContext *s, const int *c) {
+AVStream *avformat_new_stream(AVFormatContext *s, const AVCodec *c) {
     auto ret = create_empty_ret(avformat_new_stream);
     auto a = get_addresses_of_parameters(s, c);
     qge_CallNativeProc(DynamicApis::pavformat_new_stream, a.data(), &ret);
@@ -313,14 +313,14 @@ const AVInputFormat *av_find_input_format(const char *short_name) {
 }
 
 int avformat_open_input(AVFormatContext **ps, const char *url, const AVInputFormat *fmt,
-                        int **options) {
+                        AVDictionary **options) {
     auto ret = create_empty_ret(avformat_open_input);
     auto a = get_addresses_of_parameters(ps, url, fmt, options);
     qge_CallNativeProc(DynamicApis::pavformat_open_input, a.data(), &ret);
     return ret;
 }
 
-int avformat_find_stream_info(AVFormatContext *ic, int **options) {
+int avformat_find_stream_info(AVFormatContext *ic, AVDictionary **options) {
     auto ret = create_empty_ret(avformat_find_stream_info);
     auto a = get_addresses_of_parameters(ic, options);
     qge_CallNativeProc(DynamicApis::pavformat_find_stream_info, a.data(), &ret);
@@ -329,10 +329,10 @@ int avformat_find_stream_info(AVFormatContext *ic, int **options) {
 
 void av_program_add_stream_index(AVFormatContext *ac, int progid, unsigned int idx) {
     auto a = get_addresses_of_parameters(ac, progid, idx);
-    qge_CallNativeProc(DynamicApis::pav_program_add_stream_index, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pav_program_add_stream_index, a.data(), nullptr);
 }
 
-int av_read_frame(AVFormatContext *s, int *pkt) {
+int av_read_frame(AVFormatContext *s, AVPacket *pkt) {
     auto ret = create_empty_ret(av_read_frame);
     auto a = get_addresses_of_parameters(s, pkt);
     qge_CallNativeProc(DynamicApis::pav_read_frame, a.data(), &ret);
@@ -349,17 +349,17 @@ int avformat_seek_file(AVFormatContext *s, int stream_index, int64_t min_ts, int
 
 void avformat_close_input(AVFormatContext **s) {
     auto a = get_addresses_of_parameters(s);
-    qge_CallNativeProc(DynamicApis::pavformat_close_input, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pavformat_close_input, a.data(), nullptr);
 }
 
-int avformat_write_header(AVFormatContext *s, int **options) {
+int avformat_write_header(AVFormatContext *s, AVDictionary **options) {
     auto ret = create_empty_ret(avformat_write_header);
     auto a = get_addresses_of_parameters(s, options);
     qge_CallNativeProc(DynamicApis::pavformat_write_header, a.data(), &ret);
     return ret;
 }
 
-int av_interleaved_write_frame(AVFormatContext *s, int *pkt) {
+int av_interleaved_write_frame(AVFormatContext *s, AVPacket *pkt) {
     auto ret = create_empty_ret(av_interleaved_write_frame);
     auto a = get_addresses_of_parameters(s, pkt);
     qge_CallNativeProc(DynamicApis::pav_interleaved_write_frame, a.data(), &ret);
@@ -389,9 +389,10 @@ enum AVCodecID av_guess_codec(const AVOutputFormat *fmt, const char *short_name,
     return ret;
 }
 
-void av_pkt_dump_log2(void *avcl, int level, const int *pkt, int dump_payload, const AVStream *st) {
+void av_pkt_dump_log2(void *avcl, int level, const AVPacket *pkt, int dump_payload,
+                      const AVStream *st) {
     auto a = get_addresses_of_parameters(avcl, level, pkt, dump_payload, st);
-    qge_CallNativeProc(DynamicApis::pav_pkt_dump_log2, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pav_pkt_dump_log2, a.data(), nullptr);
 }
 
 enum AVCodecID av_codec_get_id(const struct AVCodecTag *const *tags, unsigned int tag) {
@@ -410,7 +411,7 @@ int av_codec_get_tag2(const struct AVCodecTag *const *tags, enum AVCodecID id, u
 
 void av_dump_format(AVFormatContext *ic, int index, const char *url, int is_output) {
     auto a = get_addresses_of_parameters(ic, index, url, is_output);
-    qge_CallNativeProc(DynamicApis::pav_dump_format, a.data(), &ret);
+    qge_CallNativeProc(DynamicApis::pav_dump_format, a.data(), nullptr);
 }
 
 int av_filename_number_test(const char *filename) {
@@ -434,7 +435,7 @@ int avformat_query_codec(const AVOutputFormat *ofmt, enum AVCodecID codec_id, in
     return ret;
 }
 
-int av_guess_frame_rate(AVFormatContext *ctx, AVStream *stream, int *frame) {
+AVRational av_guess_frame_rate(AVFormatContext *ctx, AVStream *stream, AVFrame *frame) {
     auto ret = create_empty_ret(av_guess_frame_rate);
     auto a = get_addresses_of_parameters(ctx, stream, frame);
     qge_CallNativeProc(DynamicApis::pav_guess_frame_rate, a.data(), &ret);
@@ -457,7 +458,7 @@ int avformat_transfer_internal_stream_timing_info(const AVOutputFormat *ofmt, AV
     return ret;
 }
 
-int av_stream_get_codec_timebase(const AVStream *st) {
+AVRational av_stream_get_codec_timebase(const AVStream *st) {
     auto ret = create_empty_ret(av_stream_get_codec_timebase);
     auto a = get_addresses_of_parameters(st);
     qge_CallNativeProc(DynamicApis::pav_stream_get_codec_timebase, a.data(), &ret);

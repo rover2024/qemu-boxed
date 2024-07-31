@@ -2,6 +2,8 @@
 extern "C" {
 #endif
 
+#include <libswscale/swscale.h>
+
 #ifdef __cplusplus
 }
 #endif

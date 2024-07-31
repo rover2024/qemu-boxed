@@ -2,6 +2,8 @@
 extern "C" {
 #endif
 
+#include <libswresample/swresample.h>
+
 #ifdef __cplusplus
 }
 #endif

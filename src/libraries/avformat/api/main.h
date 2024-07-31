@@ -2,6 +2,11 @@
 extern "C" {
 #endif
 
+#define __STDC_CONSTANT_MACROS
+
+#include <libavformat/avio.h>
+#include <libavformat/avformat.h>
+
 #ifdef __cplusplus
 }
 #endif

@@ -72,11 +72,6 @@ namespace {
 
 }
 
-void av_log(void *avcl, int level, const char *fmt) {
-    auto a = get_addresses_of_parameters(avcl, level, fmt);
-    qge_CallNativeProc(DynamicApis::pav_log, a.data(), nullptr);
-}
-
 int av_log_get_level(void) {
     auto ret = create_empty_ret(av_log_get_level);
     auto a = get_addresses_of_parameters();
@@ -180,22 +175,22 @@ int av_find_nearest_q_idx(AVRational q, const AVRational *q_list) {
 
 int64_t av_rescale(int64_t a, int64_t b, int64_t c) {
     auto ret = create_empty_ret(av_rescale);
-    auto a = get_addresses_of_parameters(a, b, c);
-    qge_CallNativeProc(DynamicApis::pav_rescale, a.data(), &ret);
+    auto a1 = get_addresses_of_parameters(a, b, c);
+    qge_CallNativeProc(DynamicApis::pav_rescale, a1.data(), &ret);
     return ret;
 }
 
 int64_t av_rescale_q(int64_t a, AVRational bq, AVRational cq) {
     auto ret = create_empty_ret(av_rescale_q);
-    auto a = get_addresses_of_parameters(a, bq, cq);
-    qge_CallNativeProc(DynamicApis::pav_rescale_q, a.data(), &ret);
+    auto a1 = get_addresses_of_parameters(a, bq, cq);
+    qge_CallNativeProc(DynamicApis::pav_rescale_q, a1.data(), &ret);
     return ret;
 }
 
 int64_t av_rescale_q_rnd(int64_t a, AVRational bq, AVRational cq, enum AVRounding rnd) {
     auto ret = create_empty_ret(av_rescale_q_rnd);
-    auto a = get_addresses_of_parameters(a, bq, cq, rnd);
-    qge_CallNativeProc(DynamicApis::pav_rescale_q_rnd, a.data(), &ret);
+    auto a1 = get_addresses_of_parameters(a, bq, cq, rnd);
+    qge_CallNativeProc(DynamicApis::pav_rescale_q_rnd, a1.data(), &ret);
     return ret;
 }
 
@@ -402,20 +397,6 @@ size_t av_strlcat(char *dst, const char *src, size_t size) {
     return ret;
 }
 
-size_t av_strlcatf(char *dst, size_t size, const char *fmt) {
-    auto ret = create_empty_ret(av_strlcatf);
-    auto a = get_addresses_of_parameters(dst, size, fmt);
-    qge_CallNativeProc(DynamicApis::pav_strlcatf, a.data(), &ret);
-    return ret;
-}
-
-char *av_asprintf(const char *fmt) {
-    auto ret = create_empty_ret(av_asprintf);
-    auto a = get_addresses_of_parameters(fmt);
-    qge_CallNativeProc(DynamicApis::pav_asprintf, a.data(), &ret);
-    return ret;
-}
-
 char *av_get_token(const char **buf, const char *term) {
     auto ret = create_empty_ret(av_get_token);
     auto a = get_addresses_of_parameters(buf, term);
@@ -432,8 +413,8 @@ char *av_strtok(char *s, const char *delim, char **saveptr) {
 
 int av_strcasecmp(const char *a, const char *b) {
     auto ret = create_empty_ret(av_strcasecmp);
-    auto a = get_addresses_of_parameters(a, b);
-    qge_CallNativeProc(DynamicApis::pav_strcasecmp, a.data(), &ret);
+    auto a1 = get_addresses_of_parameters(a, b);
+    qge_CallNativeProc(DynamicApis::pav_strcasecmp, a1.data(), &ret);
     return ret;
 }
 
@@ -447,11 +428,6 @@ int av_match_name(const char *name, const char *names) {
 void av_bprint_init(AVBPrint *buf, unsigned int size_init, unsigned int size_max) {
     auto a = get_addresses_of_parameters(buf, size_init, size_max);
     qge_CallNativeProc(DynamicApis::pav_bprint_init, a.data(), nullptr);
-}
-
-void av_bprintf(AVBPrint *buf, const char *fmt) {
-    auto a = get_addresses_of_parameters(buf, fmt);
-    qge_CallNativeProc(DynamicApis::pav_bprintf, a.data(), nullptr);
 }
 
 void av_bprint_chars(AVBPrint *buf, char c, unsigned int n) {
@@ -773,21 +749,21 @@ AVFrameSideData *av_frame_get_side_data(const AVFrame *frame, enum AVFrameSideDa
     return ret;
 }
 
-double av_display_rotation_get(const int32_t[9] matrix) {
+double av_display_rotation_get(const int32_t matrix[9]) {
     auto ret = create_empty_ret(av_display_rotation_get);
     auto a = get_addresses_of_parameters(matrix);
     qge_CallNativeProc(DynamicApis::pav_display_rotation_get, a.data(), &ret);
     return ret;
 }
 
-void av_display_rotation_set(int32_t[9] matrix, double angle) {
+void av_display_rotation_set(int32_t matrix[9], double angle) {
     auto a = get_addresses_of_parameters(matrix, angle);
     qge_CallNativeProc(DynamicApis::pav_display_rotation_set, a.data(), nullptr);
 }
 
 int av_expr_parse(AVExpr **expr, const char *s, const char *const *const_names,
-                  const char *const *func1_names, double (*const *)(void *, double) funcs1,
-                  const char *const *func2_names, double (*const *)(void *, double, double) funcs2,
+                  const char *const *func1_names, double (*const *funcs1)(void *, double),
+                  const char *const *func2_names, double (*const *funcs2)(void *, double, double),
                   int log_offset, void *log_ctx) {
     auto ret = create_empty_ret(av_expr_parse);
     auto a = get_addresses_of_parameters(expr, s, const_names, func1_names, funcs1, func2_names,
@@ -982,4 +958,50 @@ void av_thread_message_queue_set_err_send(AVThreadMessageQueue *mq, int err) {
 void av_thread_message_queue_set_err_recv(AVThreadMessageQueue *mq, int err) {
     auto a = get_addresses_of_parameters(mq, err);
     qge_CallNativeProc(DynamicApis::pav_thread_message_queue_set_err_recv, a.data(), nullptr);
+}
+
+void av_log_set_callback_help(void) {
+    auto a = get_addresses_of_parameters();
+    qge_CallNativeProc(DynamicApis::pav_log_set_callback_help, a.data(), nullptr);
+}
+
+void av_log_set_callback_report(int *_p_report_file_level, FILE *_report_file) {
+    auto a = get_addresses_of_parameters(_p_report_file_level, _report_file);
+    qge_CallNativeProc(DynamicApis::pav_log_set_callback_report, a.data(), nullptr);
+}
+
+void av_vlog(void *avcl, int level, const char *fmt, va_list vl) {
+    auto a = get_addresses_of_parameters(avcl, level, fmt, vl);
+    qge_CallNativeProc(DynamicApis::pav_vlog, a.data(), nullptr);
+}
+
+int av_bprint_alloc(AVBPrint *buf, unsigned room) {
+    auto ret = create_empty_ret(av_bprint_alloc);
+    auto a = get_addresses_of_parameters(buf, room);
+    qge_CallNativeProc(DynamicApis::pav_bprint_alloc, a.data(), &ret);
+    return ret;
+}
+
+void av_bprint_grow(AVBPrint *buf, unsigned extra_len) {
+    auto a = get_addresses_of_parameters(buf, extra_len);
+    qge_CallNativeProc(DynamicApis::pav_bprint_grow, a.data(), nullptr);
+}
+
+int avutil_decode_interrupt_cb(void *ctx) {
+    auto ret = create_empty_ret(avutil_decode_interrupt_cb);
+    auto a = get_addresses_of_parameters(ctx);
+    qge_CallNativeProc(DynamicApis::pavutil_decode_interrupt_cb, a.data(), &ret);
+    return ret;
+}
+
+void avutil_transcode_init_done(int *val, int get) {
+    auto a = get_addresses_of_parameters(val, get);
+    qge_CallNativeProc(DynamicApis::pavutil_transcode_init_done, a.data(), nullptr);
+}
+
+volatile int *avutil_received_nb_signals_ptr(void) {
+    auto ret = create_empty_ret(avutil_received_nb_signals_ptr);
+    auto a = get_addresses_of_parameters();
+    qge_CallNativeProc(DynamicApis::pavutil_received_nb_signals_ptr, a.data(), &ret);
+    return ret;
 }

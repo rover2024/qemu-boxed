@@ -100,7 +100,7 @@ int sws_isSupportedOutput(enum AVPixelFormat pix_fmt) {
     return ret;
 }
 
-const int *sws_get_class() {
+const AVClass *sws_get_class() {
     auto ret = create_empty_ret(sws_get_class);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::psws_get_class, a.data(), &ret);

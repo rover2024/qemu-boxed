@@ -72,7 +72,7 @@ namespace {
 
 }
 
-const int *swr_get_class() {
+const AVClass *swr_get_class() {
     auto ret = create_empty_ret(swr_get_class);
     auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pswr_get_class, a.data(), &ret);

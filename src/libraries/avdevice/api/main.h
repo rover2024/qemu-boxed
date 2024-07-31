@@ -2,6 +2,10 @@
 extern "C" {
 #endif
 
+#define __STDC_CONSTANT_MACROS
+
+#include <libavdevice/avdevice.h>
+
 #ifdef __cplusplus
 }
 #endif

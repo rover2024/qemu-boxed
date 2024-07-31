@@ -105,7 +105,7 @@ int64_t avio_size(AVIOContext *s) {
     return ret;
 }
 
-void avio_print_string_array(AVIOContext *s, const char *[] strings) {
+void avio_print_string_array(AVIOContext *s, const char * strings[]) {
     auto a = get_addresses_of_parameters(s, strings);
     qge_CallNativeProc(DynamicApis::pavio_print_string_array, a.data(), nullptr);
 }
@@ -421,7 +421,7 @@ int av_filename_number_test(const char *filename) {
     return ret;
 }
 
-int av_sdp_create(AVFormatContext *[] ac, int n_files, char *buf, int size) {
+int av_sdp_create(AVFormatContext *ac[], int n_files, char *buf, int size) {
     auto ret = create_empty_ret(av_sdp_create);
     auto a = get_addresses_of_parameters(ac, n_files, buf, size);
     qge_CallNativeProc(DynamicApis::pav_sdp_create, a.data(), &ret);

@@ -2,7 +2,10 @@
 extern "C" {
 #endif
 
+#define __STDC_CONSTANT_MACROS
+
 #include <libavcodec/avcodec.h>
+#include <libavcodec/bsf.h>
 
 #ifdef __cplusplus
 }

@@ -2,6 +2,26 @@
 extern "C" {
 #endif
 
+#define __STDC_CONSTANT_MACROS
+
+#include <libavutil/avutil.h>
+#include <libavutil/fifo.h>
+#include <libavutil/samplefmt.h>
+#include <libavutil/channel_layout.h>
+#include <libavutil/buffer.h>
+#include <libavutil/dict.h>
+#include <libavutil/frame.h>
+#include <libavutil/eval.h>
+#include <libavutil/pixdesc.h>
+#include <libavutil/hwcontext.h>
+#include <libavutil/threadmessage.h>
+#include <libavutil/bprint.h>
+#include <libavutil/time.h>
+#include <libavutil/opt.h>
+#include <libavutil/cpu.h>
+#include <libavutil/parseutils.h>
+#include <libavutil/display.h>
+
 #ifdef __cplusplus
 }
 #endif
@@ -20,9 +40,7 @@ extern "C" {
     F(av_fifo_read)                                                                                \
     F(av_find_best_pix_fmt_of_2)                                                                   \
     F(av_log_set_level)                                                                            \
-    F(av_bprintf)                                                                                  \
     F(av_dict_free)                                                                                \
-    F(av_log)                                                                                      \
     F(av_rescale_q_rnd)                                                                            \
     F(av_thread_message_queue_set_err_recv)                                                        \
     F(av_realloc_array)                                                                            \
@@ -50,7 +68,6 @@ extern "C" {
     F(av_get_media_type_string)                                                                    \
     F(av_get_known_color_name)                                                                     \
     F(av_get_token)                                                                                \
-    F(av_asprintf)                                                                                 \
     F(av_channel_layout_from_string)                                                               \
     F(av_fifo_freep2)                                                                              \
     F(av_get_pix_fmt)                                                                              \
@@ -70,7 +87,6 @@ extern "C" {
     F(av_gettime_relative)                                                                         \
     F(av_log_set_callback_help)                                                                    \
     F(av_hwdevice_ctx_create_derived)                                                              \
-    F(av_strlcatf)                                                                                 \
     F(av_channel_name)                                                                             \
     F(av_get_sample_fmt)                                                                           \
     F(av_channel_layout_uninit)                                                                    \
@@ -146,4 +162,10 @@ extern "C" {
     F(av_rescale_q)                                                                                \
     F(av_rescale_delta)                                                                            \
     F(av_dict_copy)                                                                                \
-    F(av_parse_time)
+    F(av_parse_time)                                                                               \
+    F(av_vlog)                                                                                     \
+    F(av_bprint_alloc)                                                                             \
+    F(av_bprint_grow)                                                                              \
+    F(avutil_decode_interrupt_cb)                                                                  \
+    F(avutil_transcode_init_done)                                                                  \
+    F(avutil_received_nb_signals_ptr)

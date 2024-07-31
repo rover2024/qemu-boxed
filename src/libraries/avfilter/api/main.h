@@ -2,6 +2,12 @@
 extern "C" {
 #endif
 
+#define __STDC_CONSTANT_MACROS
+
+#include <libavfilter/buffersrc.h>
+#include <libavfilter/buffersink.h>
+#include <libavfilter/avfilter.h>
+
 #ifdef __cplusplus
 }
 #endif

@@ -987,9 +987,9 @@ void av_bprint_grow(AVBPrint *buf, unsigned extra_len) {
     qge_CallNativeProc(DynamicApis::pav_bprint_grow, a.data(), nullptr);
 }
 
-int avutil_decode_interrupt_cb(void *ctx) {
+void *avutil_decode_interrupt_cb() {
     auto ret = create_empty_ret(avutil_decode_interrupt_cb);
-    auto a = get_addresses_of_parameters(ctx);
+    auto a = get_addresses_of_parameters();
     qge_CallNativeProc(DynamicApis::pavutil_decode_interrupt_cb, a.data(), &ret);
     return ret;
 }
